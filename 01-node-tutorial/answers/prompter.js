@@ -38,6 +38,7 @@ const form = () => {
     <option value = "green"> Green </option>
     <option value = "yellow"> Yellow </option>
     <option value = "pink"> Pink </option>
+    <option value = "purple"> Purple </option>
   </select>
   <button type ="submit">Apply </button>
   </form>
