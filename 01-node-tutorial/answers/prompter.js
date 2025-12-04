@@ -38,13 +38,14 @@ const form = () => {
     <option value = "green"> Green </option>
     <option value = "yellow"> Yellow </option>
     <option value = "pink"> Pink </option>
+    <option value = "purple"> Purple </option>
   </select>
   <button type ="submit">Apply </button>
   </form>
   </body>
   `;
 };
-
+// this is my comment for nodemon restart
 const server = http.createServer((req, res) => {
   console.log("req.method is ", req.method);
   console.log("req.url is ", req.url);
