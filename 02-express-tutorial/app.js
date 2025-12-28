@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const peopleRouter = require('./routes/people')
-
+const cookieParser = require('cookie-parser')
 // const morgan = require('morgan')
 
 const { products } = require('./data')
@@ -22,7 +22,38 @@ app.use(logger)
 app.use(express.urlencoded({ extended: false }))
 // parse json
 app.use(express.json())
+/// Optional task ///
+app.use(cookieParser()); // to parse the cookies
 
+const auth = (req, res, next) =>{
+  if (!req.cookies.name) {
+    return res
+      .status(401)
+      .json({ success: false, msg: "Unauthorized" })
+  }
+    req.user = req.cookies.name
+    next()
+  }
+
+app.post("/logon", (req, res) => {
+  if (!req.body.name) {
+    return res
+      .status(400)
+      .json({ success: false, msg: "Please provide a name" })
+  }
+    res.cookie("name", req.body.name)
+    res.status(201).json({msg: "Hello"});
+})
+
+app.delete("/logoff", (req, res) => {
+res.clearCookie("name")
+res.status(200).json({msg: "User is logged off"});
+})
+
+app.get("/test", auth, (req, res) => {
+  res.status(200).json({ msg: `Welcome ${req.user}!`})
+})
+///
 
 app.get('/api/v1/test', (req, res) => {
   res.json({ message: "It worked!" });
